@@ -1,0 +1,233 @@
+<div class="col-lg-12" align="center" style="background-color: #343a40;
+padding-bottom: 1px;
+border-radius: 7px 7px 7px 7px;">
+<h4 align="center" style="color: antiquewhite">Leave Requests</h4>
+
+</div>
+<br>
+
+<form [formGroup]="leaveRequestForm" >
+  <div class="row">
+      <div class="col-lg-4">
+  <div class="form-group">
+      <label >Application Date:<span class="tx-danger">*</span></label>
+      <input type="date" formControlName="applicationDate" class="form-control"  />
+     
+  </div>
+</div>
+<div class="col-lg-4">
+  <div class="form-group">
+      <label for="applicationNo">Application No:<span class="tx-danger">*</span></label>
+      <input type="applicationNo" formControlName="applicationNo" class="form-control"  placeholder="i.e 1001"/>
+     
+  </div>
+</div>
+<div class="col-lg-4">
+      <div class="form-group">
+              <label for="user">User</label>
+             <select formControlName="user" class="form-control"
+             [ngClass]="{ 'is-invalid': submitted && f.user.errors }" >
+             <option selected label="Select User"></option>
+             <option *ngFor="let user of users" value="{{user.id}}">{{user.id}}-{{user.username}}</option>
+          </select>
+              
+          </div>
+  </div>
+  <div class="col-lg-4">
+          <div class="form-group">
+                  <label for="leaveType">Leave Type</label>
+                 <select formControlName="leaveType" class="form-control"
+                 [ngClass]="{ 'is-invalid': submitted && f.leaveType.errors }" >
+                 <option selected label="Select leave Type"></option>
+                 <option value="Annual Leave">Annual Leave</option>
+                 <option value="Casual Leave">Casual Leave</option>
+                 <option value="Sick Leave">Sick Leave</option>
+              </select>
+                 
+              </div>
+      </div>
+      <div class="col-lg-4">
+              <div class="form-group">
+                  <label for="startDate">Start Date:<span class="tx-danger">*</span></label>
+                  <input type="date" formControlName="startDate" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && f.username.errors }"  />
+                  <div *ngIf="submitted && f.startDate.errors" class="invalid-feedback">
+                      <div *ngIf="f.startDate.errors.required">Start Date is required</div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-4">
+                  <div class="form-group">
+                      <label for="endDate">End Date:<span class="tx-danger">*</span></label>
+                      <input type="date" formControlName="endDate" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                      <div *ngIf="submitted && f.endDate.errors" class="invalid-feedback">
+                          <div *ngIf="f.endDate.errors.required">End Date is required</div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-4">
+                      <div class="form-group">
+                              <label for="leaveStatus">Leave Status</label>
+                             <select formControlName="leaveStatus" class="form-control"
+                             [ngClass]="{ 'is-invalid': submitted && f.leaveStatus.errors }" >
+                             <option selected label="Select Leave Status"></option>
+                             <option value="Full Day">Full Day</option>
+                             <option value="Half Day">Half Day</option>
+                             <option value="Short Leave">Short Leave</option>
+                          </select>
+                              
+                          </div>
+                  </div>
+                  <div class="col-lg-4" *ngIf="leaveRequestForm.controls['leaveStatus'].value=='Half Day'">
+                          <div class="form-group">
+                                  <label for="halfDay">Half Day</label>
+                                 <select formControlName="halfDay" class="form-control"
+                                 [ngClass]="{ 'is-invalid': submitted && f.halfDay.errors }" >
+                                 <option selected label="Select Leave Status"></option>
+                                 <option value="First Half">First Half</option>
+                                 <option value="Second Half">Second Half</option>
+                              </select>
+                                  <div *ngIf="submitted && f.halfDay.role" class="invalid-feedback">
+                                      <div *ngIf="f.halfDay.errors.required">Leave Status is required</div>
+                                  </div>
+                              </div>
+                      </div>
+                      <div class="col-lg-4" *ngIf="isApprove">
+                        <div class="form-group">
+                                <label for="approveBy">Approve By Manager</label>
+                               <select formControlName="approveBy"  class="form-control"
+                               [ngClass]="{ 'is-invalid': submitted && f.approveBy.errors }" >
+                               <option selected label="Select Approve By"></option>
+                               <option *ngFor="let user of users" value="{{user.id}}">{{user.id}}-{{user.username}}</option>
+                            </select>
+                                
+                            </div>
+                    </div>
+                      <div class="col-lg-4" *ngIf="isApprove">
+                        <div class="form-group">
+                                <label for="status">Status</label>
+                               <select formControlName="status" class="form-control"
+                               [ngClass]="{ 'is-invalid': submitted && f.status.errors }" >
+                               <option selected label="Select Status"></option>
+                               <option value="approved">Approve</option>
+                               <option value="pending">Pending</option>
+                               <option value="reject">Reject</option>
+                            </select>
+                                
+                            </div>
+                    </div>
+                   
+                  <div class="col-lg-6" *ngIf="isApprove">
+                    <div class="form-group">
+                        <label for="managerDescription">Manager Description:</label>
+                        <textarea type="text" formControlName="managerDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+                         placeholder="any addition comment goes here....."></textarea>
+                        <div *ngIf="submitted && f.managerDescription.errors" class="invalid-feedback">
+                            <div *ngIf="f.managerDescription.errors.required">Manager Description is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" *ngIf="HrApproval">
+                  <div class="form-group">
+                          <label for="approveByHr">Approve By Hr</label>
+                         <select formControlName="approveByHr"  class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && f.approveByHr.errors }" >
+                         <option selected label="Select Approve By"></option>
+                         <option *ngFor="let user of users" value="{{user.id}}">{{user.id}}-{{user.username}}</option>
+                      </select>
+                      </div>
+              </div>
+              <div class="col-lg-4" *ngIf="HrApproval">
+                <div class="form-group">
+                        <label for="hrStatus">Status</label>
+                       <select formControlName="hrStatus" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && f.hrStatus.errors }" >
+                       <option selected label="Select Status"></option>
+                       <option value="approved">Approve</option>
+                       <option value="pending">Pending</option>
+                       <option value="reject">Reject</option>
+                    </select>
+                        
+                    </div>
+            </div>
+            <div class="col-lg-6" *ngIf="HrApproval">
+              <div class="form-group">
+                  <label for="hrRemarks">Remarks by HR:</label>
+                  <textarea type="text" formControlName="hrRemarks" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+                   placeholder="any addition comment goes here....."></textarea>
+                  <div *ngIf="submitted && f.hrRemarks.errors" class="invalid-feedback">
+                      <div *ngIf="f.hrRemarks.errors.required">Manager Description is required</div>
+                  </div>
+              </div>
+          </div>
+                   
+</div >
+<div class="row">
+      <div class="col-lg-6">
+              <div class="form-group">
+                  <label for="reason">Reason:</label>
+                  <textarea type="text" formControlName="reason" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+                   placeholder="any addition comment goes here....."></textarea>
+                  <div *ngIf="submitted && f.reason.errors" class="invalid-feedback">
+                      <div *ngIf="f.reason.errors.required">Reason is required</div>
+                  </div>
+              </div>
+          </div>
+      <div class="col-lg-6">
+              <div class="form-group">
+                  <label for="replacementNote">Replacement Note:</label>
+                  <textarea type="text" formControlName="replacementNote" class="form-control" 
+                  [ngClass]="{ 'is-invalid': submitted && f.username.errors }"  placeholder="any additional comment goes here"></textarea>
+                  <div *ngIf="submitted && f.replacementNote.errors" class="invalid-feedback">
+                      <div *ngIf="f.replacementNote.errors.required">Replacement Note is required</div>
+                  </div>
+              </div>
+          </div>
+
+</div>
+<div class="row" style="float: right;">
+  <div class="col-lg-12" >
+  <div class="form-group">
+      <button type="button" class="btn btn-primary" (click)="createAndUpdate(leaveRequestForm.value)">Submit</button>
+      <button type="submit" class="btn btn-primary" style="background: #343a40;;
+      border-color: #ced4da;" [routerLink]="['/leave_requests']" (click)="cancel()" routerLinkActive="router-link-active" >Cancel</button>
+      
+  </div>
+</div>
+</div>
+</form>
+<table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Application Date</th>
+            <th scope="col">Application No</th>
+            <th scope="col">User</th>
+            <th scope="col">Leave Type</th>
+            <th scope="col">Leave Status</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vacation of vacations;let i=index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{vacation.applicationDate}}</td>
+            <td>{{vacation.applicationNo}}</td>
+            <td>{{vacation.user}}</td>
+            <td>{{vacation.leaveType}}</td>
+            <td>{{vacation.leaveStatus}}</td>
+            <td>{{vacation.status}}</td>
+            <td>
+              <button type="button" class="btn btn-warning" (click)="Edit(vacation.id)"><span>Edit</span></button>
+            <button type="button" class="btn btn-danger" (click)="employeeDelete(vacation.id)">Delete</button>
+            <button *ngIf="vacation.status!='approved'" type="button" class="btn btn-success" (click)="ApproveByManager(vacation.id)">Approve By Manager</button>
+            <button *ngIf="vacation.hrStatus!='approved' && vacation.status=='approved'" type="button" class="btn btn-success" (click)="ApproveByHr(vacation.id)">Approve By HR</button>
+            </td>
+
+          </tr>
+          
+        </tbody>
+      </table>
+      

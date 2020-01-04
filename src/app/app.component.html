@@ -1,0 +1,23 @@
+﻿<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+    <div class="navbar-nav" align="right">
+        <a class="nav-item nav-link" routerLink="/">Home</a>
+        <a class="nav-item nav-link" routerLink="/leave_requests">Leave Request</a>
+        <!-- <a class="nav-item nav-link" routerLink="">Leave Request</a> -->
+        <span>  <a class="nav-item nav-link" align="" (click)="logout()">Logout</a></span>
+    </div>
+</nav>
+
+<!-- main app container -->
+<div class="jumbotron" style="background-color: #ced4da;">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 ">
+                <alert></alert>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- credits -->
